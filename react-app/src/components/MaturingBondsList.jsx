@@ -1,25 +1,30 @@
+import React, { useState, useEffect } from "react";
 import { getBondsByDate } from "../services/BondServices";
-import { useState } from "react";
-import { useEffect } from "react";
 
 const MaturingBondsList = (props) => {
   const [bonds, setDateBonds] = useState([]);
 
-  useEffect(() => {
-    getBondsByDateFromAPI();
-  }, []);
+  // useEffect(() => {
+  //   if(props.props.info.check){
+  //     getBondsByDateFromAPI();
+  //   }else{
+  //     getBondsByDateFromAPI();
+  //   }
+  // }, [props.props.info.check]);
 
-  const getBondsByDateFromAPI = () => {
-    getBondsByDate(props.props.info)
+  useEffect(() => {
+    getBondsByDate(props.props)
       .then((res) => {
         setDateBonds(res.data);
-        console.log(res);
       })
       .catch((err) => {
         setDateBonds([]);
         console.log(err);
       });
-  };
+}, [props.props]);
+
+
+
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -28,7 +33,10 @@ const MaturingBondsList = (props) => {
   };
 
 
+  const isBondNotChanged = Object.keys(bonds).length >0;
   return (
+    <div>
+      {isBondNotChanged? (
     <table className="table table-striped">
       <thead>
         <tr>
@@ -57,6 +65,8 @@ const MaturingBondsList = (props) => {
         ))}
       </tbody>
     </table>
+    ):(<p>There is no bond to show for this date</p>)}
+    </div>
   );
 };
 

@@ -113,6 +113,10 @@ public class BondsDataService implements IBondsDataService
     @Transactional
     @Override
     public List<BondsData> getForUser(int userId) {
+        return getUserBondsData(userId);
+    }
+
+    private List<BondsData> getUserBondsData(int userId) {
         List<BondsData> result = null;
         User user = userRepository.findById(userId).orElse(null);
         if (user != null) {
@@ -128,26 +132,12 @@ public class BondsDataService implements IBondsDataService
 
     @Override
     public List<BondsData> getForUser(int userId, Date date) {
-        List<BondsData> bondsData = getForUser(userId);
-
-        // Convert the provided date to LocalDateTime
-        LocalDateTime givenDateTime = date.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-
-        return bondsData.stream()
-                .filter(x -> {
-                    // Convert bondMaturityDate to LocalDateTime
-                    LocalDateTime bondMaturityDateTime = x.getBondMaturityDate().toInstant()
-                            .atZone(ZoneId.systemDefault())
-                            .toLocalDateTime();
-
-                    // Calculate the duration between the given date and bondMaturityDate
-                    Duration duration = Duration.between(bondMaturityDateTime, givenDateTime);
-
-                    // Check if the duration is less than or equal to 24 hours
-                    return Math.abs(duration.toHours()) <= 24;
-                })
-                .collect(Collectors.toList());
+        List<BondsData> userData = getUserBondsData(userId);
+        // Return all bonds where the maturity date is on the same numerical day as the given date
+        return userData.stream().filter(bond -> {
+            LocalDateTime maturityDate = bond.getBondMaturityDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            LocalDateTime givenDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            return Duration.between(maturityDate, givenDate).toDays() == 0;
+        }).collect(Collectors.toList());
     }
 }

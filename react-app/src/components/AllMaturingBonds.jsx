@@ -1,23 +1,43 @@
-import React from "react";
-import MaturingBondsList from './MaturingBondsList';
-import MaturingBond from "./MaturingBond";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
+import MaturingBond from "./MaturingBond";
 
-const AllMaturingBonds = (dateBonds) => {
-  //Hardcoded date, later user can select
-  var date = "2021/08/05";
-  var arr = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
+const AllMaturingBonds = (props) => {
+  const date = props.date;
+  const [dates, setDates] = useState([])
 
-  const formatDate = (timestamp) => {
-    const date = new Date(timestamp);
-    const formattedDate = date.toLocaleDateString();
-    return formattedDate;
-  };
+  useEffect(() => {
+    var a = [{ date: date, color: '#d9534f', key:0 }]
+    var colors = ['#d9534f', '#f0ad4e', '#f0ad4e', '#5cb85c', '#5cb85c']
+    var c = 0;
+    var i = -1;
+    while (c < 5) {
+      var d = moment(date, "YYYY-MM-DD").add(i, "d").toDate();
+      if (d.getDay() !== 0 && d.getDay() !== 6) {
+        a.unshift({ date: d, color: '#a94442', key:(c+1)*-1 });
+        c++;
+      }
+      i--;
+    }
+    c = 0;
+    i = 1;
+    while (c < 5) {
+      d = moment(date, "YYYY-MM-DD").add(i, "d").toDate();
+      if (d.getDay() !== 0 && d.getDay() !== 6) {
+        a.push({ date: d, color:colors.shift(), key:(c+1)});
+        c++;
+      }
+      i++;
+    }
+    setDates(a)
+  }, [date])
 
-  return arr.map((num) => (
+
+  return dates.map((d) => (
+
     <MaturingBond
-      info={moment(date, "YYYY-MM-DD").add(num, "d").toDate()}
-      key={num}
+      info={{ date: d.date, color:d.color, check: props.info }}
+      key={d.key}
     />
   ));
 };

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
-import { auth } from "../firebase";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,6 +18,7 @@ const Login = () => {
 
   const onLogin = (e) => {
     e.preventDefault();
+    const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((_) => {
         // Signed in
@@ -37,7 +37,7 @@ const Login = () => {
       <main className="container">
         <section className="row justify-content-center">
           <div className="col-12 col-md-6 col-lg-4">
-            <p className="h2 text-center">FocusApp</p>
+            <p className="h2 text-center">zBondApp</p>
 
             <form>
               <div className="form-group">
@@ -71,9 +71,6 @@ const Login = () => {
                 </button>
               </div>
             </form>
-            <p className="text-center">
-              No account yet? <NavLink to="/signup">Sign up</NavLink>
-            </p>
           </div>
         </section>
       </main>

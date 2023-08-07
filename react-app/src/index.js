@@ -4,7 +4,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth"
 import { createRoot } from 'react-dom/client';
 
 
@@ -19,7 +18,10 @@ const firebaseConfig = {
 };
 
 
-const app = initializeApp(firebaseConfig);
+
+initializeApp(firebaseConfig);
+
+
 
 
 const container = document.getElementById('root');

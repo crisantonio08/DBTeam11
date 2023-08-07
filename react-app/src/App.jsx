@@ -1,16 +1,19 @@
-import React from "react";
-import AllBonds from "./components/AllBonds";
-import AllMaturingBonds from "./components/AllMaturingBonds";
-import Login from "./components/Login";
-import NotAuthorized from "./components/NotAuthorized";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "react-datepicker/dist/react-datepicker.css";
+
+import React, { useState } from "react";
+import { Route, Routes } from 'react-router-dom'
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Route, Routes } from 'react-router-dom'
+
+import Login from "./components/Login";
+import AllBonds from "./components/AllBonds";
 import Logout from "./components/Logout";
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { useState } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import NotAuthorized from "./components/NotAuthorized";
+import MatureBondsWrapper from "./components/MatureBondsWrapper";
 
 function App() {
   const auth = getAuth();
@@ -55,7 +58,7 @@ function App() {
           <Route path="logout" element={<Logout />} />
           {!isLoading && authenticated && <>
             <Route path="/allbonds" element={<AllBonds />} />
-            <Route path="/bondsbymaturity" element={<AllMaturingBonds />} />
+            <Route path="/bondsbymaturity" element={<MatureBondsWrapper/>} />
             <Route path="/*" element={<AllBonds />} />
           </>}
           {!isLoading && !authenticated && <>
