@@ -11,21 +11,16 @@ import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class BondsDataService implements IBondsDataService
-{
+public class BondsDataService implements IBondsDataService {
     private final BondsRepository repository;
     private final UserRepository userRepository;
 
     @Autowired
-    public BondsDataService(BondsRepository repository, UserRepository userRepository)
-    {
+    public BondsDataService(BondsRepository repository, UserRepository userRepository) {
         this.repository = repository;
         this.userRepository = userRepository;
     }
@@ -47,8 +42,7 @@ public class BondsDataService implements IBondsDataService
 
     @Override
     public boolean delete(int id) {
-        if(repository.existsById(id))
-        {
+        if (repository.existsById(id)) {
             repository.deleteById(id);
             return true;
         }
@@ -62,8 +56,8 @@ public class BondsDataService implements IBondsDataService
     }
 
     @Override
-    public List<BondsData> getByHolderName(String name) {
-        return repository.findByHolderName(name);
+    public Map<String, Integer> getCountByUser(int userId) {
+        return getUserBondCount(userId);
     }
 
     @Override
@@ -128,6 +122,27 @@ public class BondsDataService implements IBondsDataService
         }
 
         return result;
+    }
+
+    private Map<String, Integer> getUserBondCount(int userId) {
+        List<BondsData> result = null;
+        User user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            List<BondsData> ret = new ArrayList<>();
+            for (String book : user.getTradingBooks()) {
+                ret.addAll(repository.findByBookName(book));
+            }
+            result = ret;
+        }
+
+        // Create a frequency table using a HashMap
+        Map<String, Integer> frequencyTable = new HashMap<>();
+
+        for (BondsData item : result) {
+            frequencyTable.put(item.getBondHolder(), frequencyTable.getOrDefault(item.getBondHolder(), 0) + 1);
+        }
+
+        return frequencyTable;
     }
 
     @Override

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/bondsdata")
@@ -54,9 +55,10 @@ public class BondsDataController {
         return dataService.getBondByISIN(isin);
     }
 
-    @GetMapping("/all/bondHolder/{bondHolder}")
-    public List<BondsData> getByBondHolder(@PathVariable String bondHolder) {
-        return dataService.getByHolderName(bondHolder);
+    @GetMapping("/all/bondHolder/{firebaseUserId}")
+    public Map<String, Integer> getByBondHolder(@PathVariable String firebaseUserId) {
+        int userId = userService.getByFirebaseUserId(firebaseUserId).getId();
+        return dataService.getCountByUser(userId);
     }
     @GetMapping("/all/user/{firebaseUserId}")
     public List<BondsData> getForUser(@PathVariable String firebaseUserId, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date date) {

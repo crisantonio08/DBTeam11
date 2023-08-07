@@ -4,6 +4,7 @@ import com.db.grad.javaapi.model.BondsData;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface IBondsDataService
 {
@@ -17,7 +18,7 @@ public interface IBondsDataService
 
     BondsData getById(int id);
 
-    List<BondsData> getByHolderName(String name);
+    Map<String, Integer> getCountByUser(int userId);
 
     BondsData update(BondsData data);
 
