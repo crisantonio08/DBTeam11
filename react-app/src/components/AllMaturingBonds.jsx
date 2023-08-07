@@ -44,7 +44,7 @@ const AllMaturingBonds = (props) => {
   return dates.map((d) => (
 
     <MaturingBond
-      info={{ date: d.date, color:d.color, check: props.info }}
+      info={{ date: d.date, color:d.color, check: props.info, originalDate:props.date }}
       key={d.key}
     />
   ));

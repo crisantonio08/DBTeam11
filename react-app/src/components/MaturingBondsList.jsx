@@ -7,6 +7,8 @@ const MaturingBondsList = (props) => {
   const date = new Date(props.props.info);
   const [bonds, setDateBonds] = useState([]);
 
+
+  //console.log("MBL"+ props.props.info.originalDate);
   // useEffect(() => {
   //   if(props.props.info.check){
   //     getBondsByDateFromAPI();
@@ -75,7 +77,7 @@ const MaturingBondsList = (props) => {
 
     {/* Render BondDueNotification for each bond */}
     {bonds.map((bond) => (
-        <BondDueNotification selected_date={date} bond={bond} />
+        <BondDueNotification info={{ date:props.props.info.originalDate, bond:bond}} />
       ))}
 
     </div>
