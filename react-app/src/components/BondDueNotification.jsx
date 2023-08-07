@@ -5,27 +5,26 @@ const BondDueNotification = (props) => {
     var maturityDateMoment = moment(props.info.bond.bondMaturityDate);
     var selectedDateMoment = moment(props.info.date);
     var days = maturityDateMoment.diff(selectedDateMoment, 'days');  
-    console.log('BOND DATE TYPES', maturityDateMoment.format("YYYY-MM-DD"), selectedDateMoment.format("YYYY-MM-DD"),days)
+    //console.log(props.info.notifications);
 
     var message = "";
-    var notifs = [...props.info.notifications];
 
     if (days === 0) {
         message = `Bond with ISIN ${props.info.bond.isin} is due today!`;
-        notifs.push(message)
+        props.info.notifications.push(message)
     }
     else if (days === 1) {
         message = `Bond with ISIN ${props.info.bond.isin} is due tomorrow!`;
-        notifs.push(message)
+        props.info.notifications.push(message)
     }
     else if(days < 0 && props.info.bond.status !== "redeemed") {
         message = `Bond with ISIN ${props.info.bond.isin} is not redeemed and is overdue by ${Math.abs(days)} days!`;
-        notifs.push(message)
+        props.info.notifications.push(message)
       }
-    
-    props.info.setNotifications(notifs);
 
-    console.log(props.info.notifications)
+      props.info.setNotifications(props.info.notifications)
+
+    //props.info.setNotifications(props.info.notifications.push(message))
     return (
     // <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     //   <div class="toast-header">
@@ -39,11 +38,10 @@ const BondDueNotification = (props) => {
     //       <span aria-hidden="true">&times;</span>
     //     </button>
     //   </div>
-    //   <div>
-    //     <>{message}</>
-    //   </div>
+      <div>
+       {message}
+      </div>
     // </div>
-    <div>{message}</div>
   );
 };
 
