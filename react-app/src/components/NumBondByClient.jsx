@@ -4,11 +4,29 @@ import { getAllBonds } from "../services/BondServices";
 import { useState } from "react";
 
 const NumBondByClient = () => {
-    const BondCount = [
-        { name:"Barclays",count: 3 },
-        { name:"British Telecom",count: 1 },
-        { name:"Goldman Sachs",count: 2 },
-    ];
+    const [bonds, setBonds] = useState([]);
+
+    useEffect(() => {
+        getBondsFromAPI();
+    }, []);
+
+    const getBondsFromAPI = async () => {
+        try {
+            const response = await fetch('https://api.example.com/your-endpoint');
+            const jsonData = await response.json();
+            setData(jsonData); // Update the state with the retrieved data
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+
+    };
+
+
+    // const BondCount = [
+    //     { name:"Barclays",count: 3 },
+    //     { name:"British Telecom",count: 1 },
+    //     { name:"Goldman Sachs",count: 2 },
+    // ];
 
     return (
         <>
