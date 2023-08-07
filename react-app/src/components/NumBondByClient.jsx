@@ -1,42 +1,33 @@
 import React, { useEffect } from "react";
+import "../App.css";
 import { getAllBonds } from "../services/BondServices";
 import { useState } from "react";
 
 const NumBondByClient = () => {
-    const [bonds, setBonds] = useState([]);
-    const [checked, setChecked] = React.useState(false);
-
-    const handleChange = () => {
-        var c = !checked;
-        setChecked(c);
-        getBondsFromAPI(c);
-    };
-
-    useEffect(() => {
-        getBondsFromAPI();
-    }, []);
-
-    const getBondsFromAPI = (c) => {
-        getAllBonds(c)
-            .then((res) => {
-                var b = res.data;
-                b.map(o => o.expanded = false)
-                setBonds(b);
-                console.log(res);
-            })
-            .catch((err) => {
-                setBonds([]);
-                console.log(err);
-            });
-    };
-
-    const message = 'The object data is:';
+    const BondCount = [
+        { name:"Barclays",count: 3 },
+        { name:"British Telecom",count: 1 },
+        { name:"Goldman Sachs",count: 2 },
+    ];
 
     return (
         <>
-            <div>NumBondByClient</div>
-            <p>{message}</p>
-            <pre>{JSON.stringify(bonds, null, 2)}</pre>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Client Name</th>
+                        <th>Bond Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {BondCount.map((item, index) => (
+                        <tr key={index}>
+                            <td>{item.name}</td>
+                            <td>{item.count}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
             {/* <p>Data Type: {typeof bonds}</p> */}
         </>
     )
