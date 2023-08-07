@@ -20,13 +20,23 @@ export function getBondsByDate(props) {
     var check = props.info.check;
     date = moment(date).format('YYYY-MM-DD');
 
-    if(!check){
+    if (!check) {
         return http.get("http://localhost:8080/api/v1/bondsdata/all/{date}?date=" + date)
-    }else{
+    } else {
         const auth = getAuth();
         const user = auth.currentUser;
         console.log(user.uid);
-        return http.get("http://localhost:8080/api/v1/bondsdata/all/user/"+user.uid+"?date="+date)
+        return http.get("http://localhost:8080/api/v1/bondsdata/all/user/" + user.uid + "?date=" + date)
 
     }
+}
+
+export function getBondsByUser(props) {
+    var date = props.info.date;
+    var check = props.info.check;
+    date = moment(date).format('YYYY-MM-DD');
+
+    const auth = getAuth();
+    const user = auth.currentUser;
+    return  http.get("http://localhost:8080/api/v1/bondsdata/all/bondHolder/" + user.uid + "?date=" + date)
 }
