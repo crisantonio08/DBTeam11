@@ -1,6 +1,14 @@
-const BondDueNotification = (selected_date, bond) => {
-    var diff = bond.bondMaturityDate - selected_date;
+import moment from 'moment';
+
+
+const BondDueNotification = (selectedDate, bond) => {
+    var maturityDateMoment = moment(bond.bondMaturityDate);
+    var selectedDateMoment = moment(selectedDate);
+
+    var diff = maturityDateMoment - selectedDateMoment;
     var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    console.log('BOND DATE TYPES', maturityDateMoment, selectedDateMoment,diff,days)
+
     var message = "";
 
     if (days === 0) {
@@ -12,7 +20,7 @@ const BondDueNotification = (selected_date, bond) => {
     else if(days < 0 && bond.status !== "redeemed") {
         message = `Bond with ISIN ${bond.isin} is not redeemed and is overdue by ${Math.abs(days)} days!`;
     }
-  
+
     return (
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="toast-header">
