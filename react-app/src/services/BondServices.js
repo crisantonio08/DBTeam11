@@ -33,7 +33,6 @@ export function getBondsByDate(props) {
 
 export function getBondsByUser(props) {
     var date = props.info.date;
-    var check = props.info.check;
     date = moment(date).format('YYYY-MM-DD');
 
     const auth = getAuth();

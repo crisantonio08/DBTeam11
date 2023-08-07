@@ -1,25 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
-import { getAllBonds } from "../services/BondServices";
-import { useState } from "react";
+import { getBondsByUser } from "../services/BondServices";
 
-const NumBondByClient = () => {
-    const [bonds, setBonds] = useState([]);
+const NumBondByClient = (props) => {
+    const [bondCount, setBondCount] = useState([]);
 
     useEffect(() => {
-        getBondsFromAPI();
-    }, []);
-
-    const getBondsFromAPI = async () => {
-        try {
-            const response = await fetch('https://api.example.com/your-endpoint');
-            const jsonData = await response.json();
-            setData(jsonData); // Update the state with the retrieved data
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-
-    };
+        getBondsByUser(props.props)
+          .then((res) => {
+            setBondCount(res.data);
+          })
+          .catch((err) => {
+            setBondCount([]);
+            console.log(err);
+          });
+    }, [props.props]);
 
 
     // const BondCount = [
@@ -30,7 +25,7 @@ const NumBondByClient = () => {
 
     return (
         <>
-            <table>
+            {/* <table>
                 <thead>
                     <tr>
                         <th>Client Name</th>
@@ -38,15 +33,17 @@ const NumBondByClient = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {BondCount.map((item, index) => (
+                    {bondCount.map((item, index) => (
                         <tr key={index}>
                             <td>{item.name}</td>
                             <td>{item.count}</td>
                         </tr>
                     ))}
                 </tbody>
-            </table>
-            {/* <p>Data Type: {typeof bonds}</p> */}
+            </table> */}
+            <div>
+            <p>Data Type: {typeof bondCount}</p>
+            </div>
         </>
     )
 }
