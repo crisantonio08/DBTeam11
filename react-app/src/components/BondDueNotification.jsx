@@ -1,10 +1,10 @@
 import moment from 'moment';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const BondDueNotification = (props) => {
     var maturityDateMoment = moment(props.info.bond.bondMaturityDate);
     var selectedDateMoment = moment(props.info.date);
-    var days = selectedDateMoment.diff(maturityDateMoment, 'days');  
-    console.log(props.info.bond) ;
+    var days = maturityDateMoment.diff(selectedDateMoment, 'days');  
     console.log('BOND DATE TYPES', maturityDateMoment.format("YYYY-MM-DD"), selectedDateMoment.format("YYYY-MM-DD"),days)
 
     var message = "";
@@ -17,8 +17,11 @@ const BondDueNotification = (props) => {
     }
     else if(days < 0 && props.info.bond.status !== "redeemed") {
         message = `Bond with ISIN ${props.info.bond.isin} is not redeemed and is overdue by ${Math.abs(days)} days!`;
+    }else{
+        message = "HERE";
     }
 
+    console.log("message" + message);
 
     return (
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -33,7 +36,9 @@ const BondDueNotification = (props) => {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="toast-body">{message}</div>
+      <div class="toast-body">
+        <p>{message}</p>
+        </div>
     </div>
   );
 };
