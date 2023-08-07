@@ -15,9 +15,8 @@ import java.util.List;
 public interface BondsRepository extends JpaRepository<BondsData, Integer>
 {
     // UPPER ==> Case insensitive queries
-    @Query(nativeQuery = true, value = "select * from bondsdata where UPPER(bond_holder) = UPPER(:tradeType)")
-    List<BondsData> findByHolderName(@Param("tradeType") String tradeType);
-
+    //@Query(nativeQuery = true, value = "select bondHolder, COUNT(bondHolder) from bondsdata where UPPER(book_name) in UPPER(:bookNames) group by bondHolder")
+    //List<BondsData> countHolderByBooks(@Param("bookNames") List<String> bookNames);
     @Query(nativeQuery = true, value = "select * from bondsdata where UPPER(type) = UPPER(:type)")
     List<BondsData> findByType(@Param("type") String type);
 
