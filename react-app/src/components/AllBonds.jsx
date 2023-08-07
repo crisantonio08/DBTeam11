@@ -51,7 +51,7 @@ const AllBonds = () => {
       <div>
         <label>
           <input type="checkbox" checked={checked} onChange={handleChange} />
-          Show only my books
+          Show only my books 
         </label>
       </div>
       <table className="table table-striped">

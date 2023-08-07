@@ -1,39 +1,37 @@
 import React from 'react'
 import AllMaturingBonds from './AllMaturingBonds'
+import { useState } from 'react';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-const MatureBondsWrapper = (dateBonds) => {
+
+const MatureBondsWrapper = () => {
+    const [checked, setChecked] = useState(false);
+    const [date, setDate] = useState(new Date("2021-08-05"));
+
+
+    const handleChange = () => {
+      var c = !checked; 
+      setChecked(c);
+    };
+
   return (
     <>
-    <AllMaturingBonds/>
-      <table className="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">ISIN</th>
-          <th scope="col">Type</th>
-          <th scope="col">Issuer</th>
-          <th scope="col">Maturity</th>
-          <th scope="col">Face Value</th>
-          <th scope="col">Currency</th>
-          <th scope="col">Coupon %</th>
-          <th scope="col">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {dateBonds.map((row, index) => (
-          <tr key={index}>
-            <td>{row.isin}</td>
-            <td>{row.type}</td>
-            <td>{row.issuerName}</td>
-            <td>{formatDate(row.bondMaturityDate)}</td>
-            <td>{row.faceValue}</td>
-            <td>{row.bondCurrency}</td>
-            <td>{row.couponPercent}</td>
-            <td>{row.status}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-          </>
+    <div>
+        <label>
+          <input type="checkbox" checked={checked} onChange={handleChange} />
+          Show only my books 
+        </label>
+        <label>
+          <DatePicker selected={date} onChange={(ndate) => setDate(ndate)} />
+        </label>
+    </div>
+
+    <div>
+      <AllMaturingBonds
+      info={checked} key={"key"} date={date}/>
+    </div>
+    </>
   )
 }
 

@@ -19,7 +19,10 @@ const firebaseConfig = {
 };
 
 
+
 const app = initializeApp(firebaseConfig);
+
+
 
 
 const container = document.getElementById('root');
