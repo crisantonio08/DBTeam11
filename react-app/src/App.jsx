@@ -14,6 +14,7 @@ import AllBonds from "./components/AllBonds";
 import Logout from "./components/Logout";
 import NotAuthorized from "./components/NotAuthorized";
 import MatureBondsWrapper from "./components/MatureBondsWrapper";
+import NumBondByClient from "./components/NumBondByClient";
 
 function App() {
   const auth = getAuth();
@@ -43,6 +44,7 @@ function App() {
                 <>
                   <Nav.Link href="/allbonds">All Bonds</Nav.Link>
                   <Nav.Link href="/bondsbymaturity">Bonds by Maturity</Nav.Link>
+                  <Nav.Link href="/numBondByClient">Number of Bonds by Client</Nav.Link>
                   <Nav.Link href="/logout">Logout</Nav.Link>
                 </>}
             </Nav>
@@ -59,6 +61,7 @@ function App() {
           {!isLoading && authenticated && <>
             <Route path="/allbonds" element={<AllBonds />} />
             <Route path="/bondsbymaturity" element={<MatureBondsWrapper/>} />
+            <Route path="/numBondByClient" element={<NumBondByClient/>} />
             <Route path="/*" element={<AllBonds />} />
           </>}
           {!isLoading && !authenticated && <>

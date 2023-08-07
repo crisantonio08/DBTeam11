@@ -54,6 +54,10 @@ public class BondsDataController {
         return dataService.getBondByISIN(isin);
     }
 
+    @GetMapping("/all/bondHolder/{bondHolder}")
+    public List<BondsData> getByBondHolder(@PathVariable String bondHolder) {
+        return dataService.getByHolderName(bondHolder);
+    }
     @GetMapping("/all/user/{firebaseUserId}")
     public List<BondsData> getForUser(@PathVariable String firebaseUserId, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date date) {
         int userId = userService.getByFirebaseUserId(firebaseUserId).getId();
