@@ -7,16 +7,6 @@ const MaturingBondsList = (props) => {
   const date = new Date(props.props.info);
   const [bonds, setDateBonds] = useState([]);
 
-
-  //console.log("MBL"+ props.props.info.originalDate);
-  // useEffect(() => {
-  //   if(props.props.info.check){
-  //     getBondsByDateFromAPI();
-  //   }else{
-  //     getBondsByDateFromAPI();
-  //   }
-  // }, [props.props.info.check]);
-
   useEffect(() => {
     getBondsByDateFromAPI();
 }, [props.props.info.check, props.props.info.date]);
@@ -31,6 +21,7 @@ const MaturingBondsList = (props) => {
         console.log(err);
       });
   };
+
 
 
 
@@ -77,7 +68,7 @@ const MaturingBondsList = (props) => {
 
     {/* Render BondDueNotification for each bond */}
     {bonds.map((bond) => (
-        <BondDueNotification info={{ date:props.props.info.originalDate, bond:bond}} />
+        <BondDueNotification info={{ date:props.props.info.originalDate, bond:bond, notifications:props.props.info.notifications, setNotifications:props.props.info.setNotifications}} />
       ))}
 
     </div>

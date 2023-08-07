@@ -8,13 +8,14 @@ import "react-datepicker/dist/react-datepicker.css";
 const MatureBondsWrapper = () => {
     const [checked, setChecked] = useState(false);
     const [date, setDate] = useState(new Date("2021-08-05"));
-
+    const [notifications, setNotifications] = useState(['test', 'one']);
 
     const handleChange = () => {
       var c = !checked; 
       setChecked(c);
     };
 
+    
   return (
     <>
     <div>
@@ -25,11 +26,12 @@ const MatureBondsWrapper = () => {
         <label>
           <DatePicker selected={date} onChange={(ndate) => setDate(ndate)} />
         </label>
+
     </div>
 
     <div>
       <AllMaturingBonds
-      info={checked} key={"key"} date={date}/>
+      info={checked} key={"key"} date={date} setNotifications={setNotifications} notifications={notifications}/>
     </div>
     </>
   )

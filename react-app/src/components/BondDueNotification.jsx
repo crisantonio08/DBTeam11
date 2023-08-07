@@ -8,38 +8,42 @@ const BondDueNotification = (props) => {
     console.log('BOND DATE TYPES', maturityDateMoment.format("YYYY-MM-DD"), selectedDateMoment.format("YYYY-MM-DD"),days)
 
     var message = "";
+    var notifs = [...props.info.notifications];
 
     if (days === 0) {
         message = `Bond with ISIN ${props.info.bond.isin} is due today!`;
+        notifs.push(message)
     }
     else if (days === 1) {
         message = `Bond with ISIN ${props.info.bond.isin} is due tomorrow!`;
+        notifs.push(message)
     }
     else if(days < 0 && props.info.bond.status !== "redeemed") {
         message = `Bond with ISIN ${props.info.bond.isin} is not redeemed and is overdue by ${Math.abs(days)} days!`;
-    }else{
-        message = "HERE";
-    }
+        notifs.push(message)
+      }
+    
+    props.info.setNotifications(notifs);
 
-    console.log("message" + message);
-
+    console.log(props.info.notifications)
     return (
-    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
-        <strong class="mr-auto">Bond Alert</strong>
-        <button
-          type="button"
-          class="ml-2 mb-1 close"
-          data-dismiss="toast"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="toast-body">
-        <p>{message}</p>
-        </div>
-    </div>
+    // <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    //   <div class="toast-header">
+    //     <strong class="mr-auto">Bond Alert</strong>
+    //     <button
+    //       type="button"
+    //       class="ml-2 mb-1 close"
+    //       data-dismiss="toast"
+    //       aria-label="Close"
+    //     >
+    //       <span aria-hidden="true">&times;</span>
+    //     </button>
+    //   </div>
+    //   <div>
+    //     <>{message}</>
+    //   </div>
+    // </div>
+    <div>{message}</div>
   );
 };
 

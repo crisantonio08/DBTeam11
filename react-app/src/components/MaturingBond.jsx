@@ -9,6 +9,7 @@ const MaturingBond = (props) => {
     backgroundColor: props.info.color,
   };
 
+
   return (
     <div className="container">
       <header style={dateStyle}>
