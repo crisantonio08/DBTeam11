@@ -37,7 +37,7 @@ const Login = () => {
       <main className="container">
         <section className="row justify-content-center">
           <div className="col-12 col-md-6 col-lg-4">
-            <p className="h2 text-center">zBondApp</p>
+            <p className="h2 text-center">BondApp</p>
 
             <form>
               <div className="form-group">

@@ -15,7 +15,6 @@ const AllBonds = () => {
 
   const handleExpand = (e) => {
     e.preventDefault();
-    console.log("click :)")
     var b = bonds;
     b[e.target.id].expanded = !b[e.target.id].expanded;
     console.log(b)

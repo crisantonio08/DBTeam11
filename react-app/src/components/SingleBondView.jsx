@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SingleBondView = ({ bond }) => {
-    const {expanded, ...other} = bond;
+    const {id, expanded, ...other} = bond;
     bond = other;
 
     const formatDate = (dateString) => {
